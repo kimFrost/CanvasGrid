@@ -1,21 +1,14 @@
 
 import Tile from './tile';
-import TileChunk from './tile.chunk';
+import Cell from './cell';
+import World from './world';
 
 
-const options = {
-  tileWidth: 100,
-  tileHeight: 50
-};
 
 let zoom = 1;
 let xCount = 20;
 let yCount = 20;
-let chunkXCount = 10;
-let chunkYCount = 10;
-let chunkWidth = options.tileWidth * 16 / 2;
-let chunkHeight = options.tileHeight * 16 / 2;
-let tiles = [];
+
 
 /*
 for (let yi = 0; yi < yCount; yi++) {
@@ -54,14 +47,7 @@ app.renderer.autoResize = true;
 app.renderer.resize(window.innerWidth, window.innerHeight);
 */
 
-let world = new PIXI.Container()
-app.stage.addChild(world);
-
-world.position.set(20, 50);
-world.vx = 1;
-//world.x = (app.screen.width - world.width) / 2;
-//world.y = (app.screen.height - world.height) / 2;
-
+let world = null;
 
 
 //load an image and run the `setup` function when it's done
@@ -80,32 +66,14 @@ function setup() {
 
   //world.addChild(sprite);
 
-  //~~ Split tiles into chunk containers  ~~//
-  for (let yi = 0; yi < chunkYCount; yi++) {
-    for (let xi = 0; xi < chunkXCount; xi++) {
-      let chunk = new TileChunk();
-      let testGraphic = new PIXI.Graphics();
-      chunk.position.set(xi * chunkWidth, yi * chunkHeight + (yi % 2 * chunkHeight));
-      testGraphic.lineStyle(2, 0x0000FF, 1);
-      testGraphic.beginFill(0xFF00BB, 0.15);
-      testGraphic.drawRect(0, 0, chunkWidth, chunkHeight);
-      testGraphic.endFill();
-      chunk.addChild(testGraphic);
-      for (let yi = 0; yi < 16; yi++) {
-        for (let xi = 0; xi < 16; xi++) {
-          let tile = new Tile(texture);
-          tile.coordinates = { xi, yi };
-          tile.position.x = xi * options.tileWidth + (yi % 2 * options.tileWidth / 2);
-          tile.position.y = yi * options.tileHeight / 2;
-          //tile.position.y += Math.floor(Math.floor(Math.random() * (20 - 0 + 1)) + 0);
-          //tile.zOrder = yi;
-          chunk.addChild(tile);
-        }
-      }
-      world.addChild(chunk);
-    }
-  }
+  world = new World();
+  app.stage.addChild(world);
 
+  world.position.set(20, 50);
+  world.vx = 1;
+
+  //world.x = (app.screen.width - world.width) / 2;
+  //world.y = (app.screen.height - world.height) / 2;
 
 
   /*
@@ -193,7 +161,7 @@ app.view.addEventListener('mousemove', (e) => {
   var distanceY = prevYPos - e.pageY;
   prevXPos = e.pageX;
   prevYPos = e.pageY;
-  if (inputStates.leftMouseDown) {
+  if (inputStates.leftMouseDown && world) {
     let worldPosition = world.position;
     world.position.set(worldPosition.x - distanceX, worldPosition.y - distanceY);
   }
