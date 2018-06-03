@@ -1,6 +1,8 @@
+
 const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const  BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 
 module.exports = {
@@ -18,7 +20,15 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Development',
             template: 'index.html'
+        }),
+        /*
+        new BrowserSyncPlugin({
+            host: 'localhost',
+            port: 4000,
+            proxy: 'http://localhost:8080/',
+            reload: false
         })
+        */
     ],
     module: {
         loaders: [

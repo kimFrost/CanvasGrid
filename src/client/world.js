@@ -5,7 +5,7 @@ import Grid from './grid';
 export default class World extends PIXI.Container {
     constructor() {
         super();
-        this.position = {
+        this.position = { 
             x: 0,
             y: 0
         }

@@ -11,8 +11,8 @@ export default class Grid extends PIXI.Container {
         this.chunkYCount = 10;
         this.tileWidth = 100;
         this.tileHeight = 50;
-        this.cellWidth = this.tileWidth * 16 / 2;
-        this.cellHeight = this.tileHeight * 16 / 2;
+        this.cellWidth = this.tileWidth * 16;
+        this.cellHeight = this.tileHeight * 16;
     }
     init() {
         //~~ Split tiles into chunk containers  ~~//

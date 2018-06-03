@@ -33,8 +33,10 @@
     "webpack": "^3.8.1"
   },
   "devDependencies": {
-    "babelify": "^7.3.0",
     "babel-cli": "^6.26.0",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.24.4",
+    "browser-sync-webpack-plugin": "^2.2.2",
     "eslint": "^3.10.2",
     "eslint-config-google": "^0.7.0"
   },

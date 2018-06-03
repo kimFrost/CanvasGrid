@@ -7,8 +7,8 @@ export default class Cell extends PIXI.Container {
         super();
         this.tiles = [];
         this.neighbours = [null, null, null, null];
-        this.xi = x;
-        this.yi = y;
+        this.xi = x * 1.02;
+        this.yi = y * 1.02;
         this.cellWidth = width;
         this.cellHeight = height;
     }
@@ -38,7 +38,7 @@ export default class Cell extends PIXI.Container {
                 let tile = new Tile();
                 tile.coordinates = { xi, yi };
                 let position = {
-                    x: this.cellWidth / 2 - tileWidth,
+                    x: this.cellWidth / 2 - tileWidth / 2,
                     y: 0
                 };
                 position.x += xi * (tileWidth / 2);
