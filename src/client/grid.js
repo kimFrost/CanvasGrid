@@ -13,6 +13,7 @@ export default class Grid extends PIXI.Container {
         this.tileHeight = 50;
         this.cellWidth = this.tileWidth * 16;
         this.cellHeight = this.tileHeight * 16;
+        this.cellStates = [];
     }
     init() {
         //~~ Split tiles into chunk containers  ~~//
@@ -25,10 +26,14 @@ export default class Grid extends PIXI.Container {
     addCell(x, y) {
         // If not exits, then genrate new
         this.generateCell(x, y);
+        // Else load cell
     }
     generateCell(x, y) {
         let cell = new Cell(x, y, this.cellWidth, this.cellHeight);
         cell.init();
         this.addChild(cell);
+    }
+    loadCell(x, y) {
+        // Load from json file or db
     }
 }
