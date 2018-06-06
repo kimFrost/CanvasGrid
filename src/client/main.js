@@ -24,21 +24,30 @@ for (let yi = 0; yi < yCount; yi++) {
 */
 
 
+//WEBGLRENDERER
+//CanvasRenderer
 
-
+//var renderer = new PIXI.autoDetectRenderer(400, 300);if (renderer.type == PIXI.WEBGL_RENDERER) {   console.log('Using WebGL');} else {  console.log('Using Canvas');};
 
 //Create a Pixi Application
 let app = new PIXI.Application({
   width: 1200,         // default: 800
   height: 800,        // default: 600
-  antialias: true,    // default: false
+  //forceCanvas: true,
+  antialias: false,    // default: false
   transparent: false, // default: false
   resolution: 1,       // default: 1
   backgroundColor: '0x1099bb'
 });
 
+//autoDetectRenderer
+
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
+
+console.log('app', app);
+
+app.renderer.type
 
 /*
 app.renderer.view.style.position = "absolute";
@@ -162,8 +171,8 @@ app.view.addEventListener('mousemove', (e) => {
   prevXPos = e.pageX;
   prevYPos = e.pageY;
   if (inputStates.leftMouseDown && world) {
-    let worldPosition = world.position;
-    world.position.set(worldPosition.x - distanceX, worldPosition.y - distanceY);
+    let worldPosition = world.grid.position;
+    world.setWorldPosition(worldPosition.x - distanceX, worldPosition.y - distanceY);
   }
 });
 

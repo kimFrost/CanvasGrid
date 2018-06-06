@@ -13,4 +13,7 @@ export default class World extends PIXI.Container {
         this.grid.init();
         this.addChild(this.grid);
     }
+    setWorldPosition(x, y) {
+        this.grid.setWorldPosition(x, y);
+    }
 }
