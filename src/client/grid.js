@@ -2,12 +2,14 @@
 
 import Tile from './tile';
 import Cell from './cell';
-import math from '../3rdparty/math.min';
+import CellMatrix from './cell.matrix';
+//import math from '../3rdparty/math.min';
 
 export default class Grid extends PIXI.Container {
     constructor() {
         super();
-        this.cells = math.matrix();
+        //this.cells = math.matrix();
+        this.cells = CellMatrix();
         this.chunkXCount = 10;
         this.chunkYCount = 10;
         this.tileWidth = 100;
@@ -44,13 +46,16 @@ export default class Grid extends PIXI.Container {
     }
     addCell(x, y) {
         // If not exits, then genrate new
-        this.generateCell(x, y);
         // Else load cell
+        let cell = this.generateCell(x, y);
+        this.cells.set(x, y, cell);
+        this.addChild(cell);
+        
     }
     generateCell(x, y) {
         let cell = new Cell(x, y, this.cellWidth, this.cellHeight);
         cell.init();
-        this.addChild(cell);
+        return cell;
     }
     loadCell(cell) {
         // Load from json file or db
