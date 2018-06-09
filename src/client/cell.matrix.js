@@ -17,6 +17,22 @@ export default class CellMatrix {
             this.matrix[y] = {};
         }
         this.matrix[y][x] = cell;
+        this.updateDOM();
+    }
+    updateDOM() {
+        let cellMap = document.getElementById('cell-map');
+        if (cellMap) {
+            let newHtml = new String();
+            for (let y in this.matrix) {
+                for (let x in this.matrix[y]) {
+                    let cell = this.matrix[y][x];
+                    if (cell) {
+                        newHtml += '<div>' + cell.xi, cell.yi + '</div>'
+                    }
+                }
+            }
+            cellMap.innerHTML = newHtml;
+        }
     }
 }
 

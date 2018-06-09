@@ -9,7 +9,7 @@ export default class Grid extends PIXI.Container {
     constructor() {
         super();
         //this.cells = math.matrix();
-        this.cells = CellMatrix();
+        this.cells = new CellMatrix();
         this.chunkXCount = 10;
         this.chunkYCount = 10;
         this.tileWidth = 100;
@@ -26,8 +26,6 @@ export default class Grid extends PIXI.Container {
         2   x c c x
         3   x x x x
         4   x x x x
-
-,t
         */
     }
     init() {
@@ -50,7 +48,6 @@ export default class Grid extends PIXI.Container {
         let cell = this.generateCell(x, y);
         this.cells.set(x, y, cell);
         this.addChild(cell);
-        
     }
     generateCell(x, y) {
         let cell = new Cell(x, y, this.cellWidth, this.cellHeight);
