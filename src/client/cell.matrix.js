@@ -1,10 +1,14 @@
 'use strict';
 
 import Cell from './cell';
+import { isFunction } from 'util';
 
 export default class CellMatrix {
     constructor() {
         this.matrix = {};
+        //this.listeners = new Map();
+        this.listeners = new Array();
+        //this.onUpdate = new Event();
     }
     get(x, y) {
         if (this.matrix[y] && this.matrix[y][x]) {
@@ -17,7 +21,15 @@ export default class CellMatrix {
             this.matrix[y] = {};
         }
         this.matrix[y][x] = cell;
-        this.updateDOM();
+        this.update();
+    }
+    update() {
+        for (let func of this.listeners) {
+            if (isFunction(func)) {
+                func(this);
+            }
+        }
+        //this.updateDOM();
     }
     updateDOM() {
         let cellMap = document.getElementById('cell-map');
@@ -33,6 +45,10 @@ export default class CellMatrix {
             }
             cellMap.innerHTML = newHtml;
         }
+    }
+    onUpdate(func) {
+        this.listeners.push(func);
+        //this.listeners.set(func, func);
     }
 }
 

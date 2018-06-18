@@ -27,6 +27,9 @@ export default class Grid extends PIXI.Container {
         3   x x x x
         4   x x x x
         */
+        this.cells.onUpdate((cells) => {
+            console.log('cell matrix update', cells);
+        });
     }
     init() {
         //~~ Split tiles into chunk containers  ~~//
@@ -37,10 +40,14 @@ export default class Grid extends PIXI.Container {
         }
 
     }
-    setWorldPosition(x, y) {
-        this.position.set(x, y);
+    setWorldPosition(posX, posY) {
+        this.position.set(posX, posY);
+        console.log('setWorldPosition', posX, posY);
         // Set cell focus
-        
+        // Position to cell
+        let x = Math.round(posX);
+        let Y = Math.round(posY);
+        //let cell = this.getCell(x, y);
     }
     addCell(x, y) {
         // If not exits, then genrate new
@@ -60,7 +67,7 @@ export default class Grid extends PIXI.Container {
         //Add cell to loadedCells
     }
     getCell(x, y) {
-
+        return this.cells.get(x, y);
     }
     setCellFocus(cell) {
         // Load all cells in range of 2 of cell
