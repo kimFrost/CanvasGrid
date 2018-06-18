@@ -2,6 +2,7 @@
 import Tile from './tile';
 import Cell from './cell';
 import World from './world';
+import Camera from './camera';
 
 
 
@@ -76,10 +77,14 @@ function setup() {
   //world.addChild(sprite);
 
   world = new World();
-  app.stage.addChild(world);
+  let camera = new Camera(world);
 
-  world.position.set(20, 50);
-  world.vx = 1;
+  app.stage.addChild(camera);
+
+
+
+  //world.position.set(20, 50);
+  //world.vx = 1;
 
   //world.x = (app.screen.width - world.width) / 2;
   //world.y = (app.screen.height - world.height) / 2;
