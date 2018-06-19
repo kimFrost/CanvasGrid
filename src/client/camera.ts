@@ -4,12 +4,15 @@
 //import 'pixi.js';
 import Cell from './cell';
 import Vector from './math/vector';
+import World from './world';
 
-export default class Findme extends PIXI.Container {
-    world: any;
-    constructor(world: any) {
+export default class Camera extends PIXI.Container {
+    private world: World;
+    private cellsInView: Cell[];
+    constructor(world: World) {
         super();
         this.world = world;
+        this.cellsInView = [];
         this.addChild(world);
     }
     move(v:Vector) {
@@ -20,8 +23,21 @@ export default class Findme extends PIXI.Container {
         this.position.set(worldPos.x, worldPos.y);
         this.updateRenderStates();
     }
+    screenPositionToWorldPosition(screenPosition: Vector): Vector {
+
+        return null;
+    }
     updateRenderStates() {
-        
+        if (this.world) {
+            let grid = this.world.grid;
+            let cellMatrix = grid.cells;
+            let WorldPosition = new Vector(0, 0);
+            //WorldPosition = 
+            //console.log('coordinate', grid.worldPositionToCoordinate(this.position.x));
+
+            //this.cellsInView
+            //cellMatrix.get
+        }
     }
 }
 

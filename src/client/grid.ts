@@ -3,10 +3,11 @@
 import Tile from './tile';
 import Cell from './cell';
 import CellMatrix from './cell.matrix';
+import Vector from './math/vector';
 //import math from '../3rdparty/math.min';
 
 export default class Grid extends PIXI.Container {
-    private cells: CellMatrix;
+    public cells: CellMatrix;
     private chunkXCount: number;
     private chunkYCount: number;
     private tileWidth: number;
@@ -40,7 +41,7 @@ export default class Grid extends PIXI.Container {
             console.log('cell matrix update', cells);
         });
     }
-    init() {
+    public init() {
         //~~ Split tiles into chunk containers  ~~//
         for (let yi = 0; yi < 5; yi++) {
             for (let xi = 0; xi < 5; xi++) {
@@ -48,6 +49,16 @@ export default class Grid extends PIXI.Container {
             }
         }
 
+    }
+    public positionToCoordinate(worldPosition: Vector): Vector {
+        let coordinate = new Vector(0, 0);
+        //coordinate.x = Math.round(worldPosition.x / this.tileWidth)
+
+        return coordinate;
+    }
+    public getClosetCell(worldPosition: Vector): Cell {
+        let coordinate = this.positionToCoordinate(worldPosition);
+        return this.getCell(coordinate);
     }
     setWorldPosition(posX, posY) {
         this.position.set(posX, posY);
@@ -75,8 +86,8 @@ export default class Grid extends PIXI.Container {
 
         //Add cell to loadedCells
     }
-    getCell(x, y) {
-        return this.cells.get(x, y);
+    getCell(v: Vector): Cell {
+        return this.cells.get(v.x, v.y);
     }
     setCellFocus(cell) {
         // Load all cells in range of 2 of cell
