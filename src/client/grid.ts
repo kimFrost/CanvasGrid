@@ -50,14 +50,14 @@ export default class Grid extends PIXI.Container {
         }
 
     }
-    public positionToCoordinate(worldPosition: Vector): Vector {
+    public worldPositionToCoordinate(worldPosition: Vector): Vector {
         let coordinate = new Vector(0, 0);
         //coordinate.x = Math.round(worldPosition.x / this.tileWidth)
 
         return coordinate;
     }
     public getClosetCell(worldPosition: Vector): Cell {
-        let coordinate = this.positionToCoordinate(worldPosition);
+        let coordinate = this.worldPositionToCoordinate(worldPosition);
         return this.getCell(coordinate);
     }
     setWorldPosition(posX, posY) {
