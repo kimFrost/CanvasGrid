@@ -31,9 +31,10 @@ export default class Camera extends PIXI.Container {
         if (this.world) {
             let grid = this.world.grid;
             let cellMatrix = grid.cells;
-            let WorldPosition = new Vector(0, 0);
+            let WorldPosition = new Vector(this.position.x, this.position.y).multiply(-1);
+            console.log('WorldPosition', WorldPosition);
             //WorldPosition = 
-            //console.log('coordinate', grid.worldPositionToCoordinate(this.position.x));
+            console.log('coordinate', grid.worldPositionToCoordinate(WorldPosition));
 
             //this.cellsInView
             //cellMatrix.get

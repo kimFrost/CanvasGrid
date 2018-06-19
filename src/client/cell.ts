@@ -1,6 +1,7 @@
 'use strict';
 
 import Tile from './tile';
+import Vector from './math/vector';
 
 export default class Cell extends PIXI.Container {
     private tiles: any[];
@@ -42,7 +43,7 @@ export default class Cell extends PIXI.Container {
         for (let yi = 0; yi < 16; yi++) {
             for (let xi = 0; xi < 16; xi++) {
                 let tile = new Tile();
-                tile.coordinates = { xi, yi };
+                tile.coordinates = new Vector(xi, yi);
                 let position = {
                     x: this.cellWidth / 2 - tileWidth / 2,
                     y: 0
@@ -58,6 +59,10 @@ export default class Cell extends PIXI.Container {
                 tile.position.y = position.y;
 
                 tile.position.y += Math.floor(Math.floor(Math.random() * (10 - 0 + 1)) + 0);
+
+                let text = new PIXI.Text(`x: ${tile.position.x}, y: ${tile.position.y}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
+                tile.addChild(text);
+
                 //tile.zOrder = yi;
                 this.addChild(tile);
             }
