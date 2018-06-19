@@ -3,6 +3,12 @@
 import Tile from './tile';
 
 export default class Cell extends PIXI.Container {
+    private tiles: any[];
+    private neighbours: Cell[];
+    private xi: number;
+    private yi: number;
+    private cellWidth: number;
+    private cellHeight: number;
     constructor(x, y, width, height) {
         super();
         this.tiles = [];

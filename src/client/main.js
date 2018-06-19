@@ -1,8 +1,10 @@
 
+
 import Tile from './tile';
 import Cell from './cell';
 import World from './world';
 import Camera from './camera';
+import Vector from './math/vector';
 
 
 
@@ -58,7 +60,7 @@ app.renderer.resize(window.innerWidth, window.innerHeight);
 */
 
 let world = null;
-
+let camera = null;
 
 //load an image and run the `setup` function when it's done
 PIXI.loader
@@ -77,7 +79,7 @@ function setup() {
   //world.addChild(sprite);
 
   world = new World();
-  let camera = new Camera(world);
+  camera = new Camera(world);
 
   app.stage.addChild(camera);
 
@@ -175,9 +177,10 @@ app.view.addEventListener('mousemove', (e) => {
   var distanceY = prevYPos - e.pageY;
   prevXPos = e.pageX;
   prevYPos = e.pageY;
-  if (inputStates.leftMouseDown && world) {
-    let worldPosition = world.grid.position;
-    world.setWorldPosition(worldPosition.x - distanceX, worldPosition.y - distanceY);
+  if (inputStates.leftMouseDown && camera) {
+    camera.move(new Vector(distanceX, distanceY));
+    //let worldPosition = world.grid.position;
+    //world.setWorldPosition(worldPosition.x - distanceX, worldPosition.y - distanceY);
   }
 });
 

@@ -2,11 +2,12 @@
 const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const  BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 
 module.exports = {
     entry: './src/client/main.js',
+    //entry: './src/client/findme.ts',
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'bundle.js'
@@ -17,10 +18,12 @@ module.exports = {
         port: 8080
     },
     plugins: [
+        /*
         new HtmlWebpackPlugin({
             title: 'Development',
             template: 'index.html'
         }),
+        */
         /*
         new BrowserSyncPlugin({
             host: 'localhost',
@@ -31,9 +34,21 @@ module.exports = {
         */
     ],
     module: {
-        loaders: [
-            { test: /\.json$/, loader: 'json-loader' },
-            { test: /\.css$/, loader: 'style!css' },
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            },
+            /*
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
+            {
+                test: /\.css$/,
+                loader: 'style!css'
+            },
             {
                 test: /\.scss$/,
                 loaders: ['style-loader', 'raw-loader', 'sass-loader']
@@ -52,9 +67,11 @@ module.exports = {
                     ].map(require.resolve),
                 }
             }
-        ]
+            */
+        ],
     },
     resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
         alias: {
             lance: path.resolve(__dirname, 'node_modules/lance-gg/src/'),
         }

@@ -6,6 +6,15 @@ import CellMatrix from './cell.matrix';
 //import math from '../3rdparty/math.min';
 
 export default class Grid extends PIXI.Container {
+    private cells: CellMatrix;
+    private chunkXCount: number;
+    private chunkYCount: number;
+    private tileWidth: number;
+    private tileHeight: number;
+    private cellWidth: number;
+    private cellHeight: number;
+    private cellStates: any[];
+    private loadedCells: Cell[];
     constructor() {
         super();
         //this.cells = math.matrix();
@@ -74,7 +83,7 @@ export default class Grid extends PIXI.Container {
 
         //Loop load cells
         if (!this.loadedCells.includes(cell)) {
-            loadCell(cell);
+            this.loadCell(cell);
         }
     }
 }
