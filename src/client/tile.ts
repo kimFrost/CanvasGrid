@@ -3,13 +3,13 @@
 import Vector from './math/vector';
 
 export default class Tile extends PIXI.Sprite {
-    public location: Vector;
+    public worldLocation: Vector;
     public coordinates: Vector;
     public index: number;
     constructor() {
         let texture = PIXI.loader.resources['assets/images/tile.png'].texture;
         super(texture);
-        this.location = new Vector(0, 0);
+        this.worldLocation = new Vector();
         this.coordinates = new Vector(0, 0);
         this.index = 0;
 

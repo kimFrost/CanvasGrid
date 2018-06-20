@@ -45,7 +45,7 @@ class Vector {
 	//readonly zero: Vector;
 	//readonly one: Vector;
 	// Constructor
-	constructor(inX, inY) {
+	constructor(inX = 0, inY = 0) {
 		if (typeof inX != "number")
 			throw new Error("Invalid x value.");
 		if (typeof inY != "number")
