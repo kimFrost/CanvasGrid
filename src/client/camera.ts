@@ -9,18 +9,27 @@ import World from './world';
 export default class Camera extends PIXI.Container {
     private world: World;
     private cellsInView: Cell[];
+    private debugTextNode: PIXI.Text;
     constructor(world: World) {
         super();
         this.world = world;
         this.cellsInView = [];
         this.addChild(world);
+        
+        // Add center debug
+        this.debugTextNode = new PIXI.Text('FINDME', { fontFamily: 'Arial', fontSize: 60, fill: 0x9FC5E8, align: 'center' });
+        this.debugTextNode.anchor.set(0.5, 0.5);
+        this.debugTextNode.position.set(50, 50);
+        this.addChild(this.debugTextNode);
+
+        //let interactionManager = PIXI.interaction.InteractionManager(renderer);
     }
     move(v:Vector) {
-        this.position.set(this.position.x - v.x, this.position.y - v.y);
+        this.world.position.set(this.world.position.x - v.x, this.world.position.y - v.y);
         this.updateRenderStates();
     }
     moveTo(worldPos:Vector) {
-        this.position.set(worldPos.x, worldPos.y);
+        this.world.position.set(worldPos.x, worldPos.y);
         this.updateRenderStates();
     }
     screenPositionToWorldPosition(screenPosition: Vector): Vector {
@@ -39,6 +48,9 @@ export default class Camera extends PIXI.Container {
             //this.cellsInView
             //cellMatrix.get
         }
+    }
+    update() {
+        console.log('camerea update ');
     }
 }
 

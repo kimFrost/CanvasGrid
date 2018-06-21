@@ -27,6 +27,7 @@ export default class Cell extends PIXI.Container {
             x: 0,
             y: 0
         };
+        position.x -= this.cellWidth / 2;
         position.x += this.xi * (this.cellWidth / 2);
         position.x -= this.yi * (this.cellWidth / 2);
         position.y += this.xi * (this.cellHeight / 2);
