@@ -32,6 +32,9 @@ for (let yi = 0; yi < yCount; yi++) {
 
 //var renderer = new PIXI.autoDetectRenderer(400, 300);if (renderer.type == PIXI.WEBGL_RENDERER) {   console.log('Using WebGL');} else {  console.log('Using Canvas');};
 
+//renderer.plugins.interaction.mouse
+//renderer.plugins.interaction.mouse.global.x
+
 //Create a Pixi Application
 let app = new PIXI.Application({
   width: 1200,         // default: 800
