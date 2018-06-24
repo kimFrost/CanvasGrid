@@ -42,6 +42,7 @@
 class Vector {
 	x: number;
 	y: number;
+	//onChange: EventEmitter
 	//readonly zero: Vector;
 	//readonly one: Vector;
 	// Constructor
@@ -56,6 +57,11 @@ class Vector {
 		this.y = inY;
 		//this.zero = new Vector(0, 0);
 		//this.one = new Vector(1, 1);
+	}
+
+	set(x: number, y:number) {
+		this.x = x;
+		this.y = y;
 	}
 
 	/**
@@ -256,7 +262,34 @@ class Vector {
 			length * Math.sin(angle)
 		);
 	}
+
+	rotate(degrees: number): Vector {
+		//radians = degrees * (Math.PI/180)
+		//angle = -angle * (Math.PI / 180);
+		//let radians = -degrees * (Math.PI/180)
+		let radians = degrees * (Math.PI / 180)
+		var cos = Math.cos(radians);
+		var sin = Math.sin(radians);
+		this.x = Math.round(100000 * this.x * cos - this.y * sin) / 100000;
+		this.y = Math.round(100000 * this.x * sin + this.y * cos) / 100000;
+		//this.x  = Math.round(10000 * (this.x * cos - this.y * sin)) / 10000;
+		//this.y = Math.round(10000 * (this.x * sin + this.y * cos)) / 10000;
+		return this;
+	}
+
 }
+
+
+var rotateVector = function(vec, ang)
+{
+    let radian = ang * (Math.PI / 180);
+    var cos = Math.cos(radian);
+    var sin = Math.sin(radian);
+    return new Array(
+      Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000, 
+      Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000
+    );
+};
 
 
 export default Vector;

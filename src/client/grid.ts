@@ -52,7 +52,10 @@ export default class Grid extends PIXI.Container {
     }
     public worldPositionToCoordinate(worldPosition: Vector): Vector {
         let coordinate = new Vector(0, 0);
-        //coordinate.x = Math.round(worldPosition.x / this.tileWidth)
+
+        // Deffenitly not right math.
+        coordinate.x = Math.round(worldPosition.x / this.tileWidth);
+        coordinate.y = Math.round(worldPosition.y / this.tileWidth);
 
         return coordinate;
     }

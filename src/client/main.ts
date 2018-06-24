@@ -8,9 +8,37 @@ import Vector from './math/vector';
 
 
 
+
 let zoom = 1;
 let xCount = 20;
 let yCount = 20;
+
+
+class Cursor {
+  public position: Vector;
+  public prevPosition: Vector;
+  constructor() {
+    this.position = new Vector();
+    this.prevPosition = new Vector();
+  }
+}
+
+export default class Controller {
+  public app: PIXI.Application;
+  public camera: Camera;
+  public cursor: Cursor;
+  public world: World;
+  constructor() {
+    this.cursor = new Cursor();
+  }
+}
+
+let controller = new Controller();
+
+export function getController(): Controller {
+  return controller;
+}
+
 
 
 /*
@@ -35,8 +63,9 @@ for (let yi = 0; yi < yCount; yi++) {
 //renderer.plugins.interaction.mouse
 //renderer.plugins.interaction.mouse.global.x
 
-//Create a Pixi Application
-let app = new PIXI.Application({
+
+/*
+let appOptions = {
   width: 1200,         // default: 800
   height: 800,        // default: 600
   //forceCanvas: true,
@@ -44,16 +73,28 @@ let app = new PIXI.Application({
   transparent: false, // default: false
   resolution: 1,       // default: 1
   backgroundColor: '0x1099bb'
-});
+} as PIXI.ApplicationOptions
+*/
+
+//Create a Pixi Application
+controller.app = new PIXI.Application(
+  1200,
+  800,
+  {
+    //forceCanvas: true,
+    antialias: false,
+    transparent: false,
+    resolution: 1,
+    backgroundColor: 0x1099bb
+  } as PIXI.ApplicationOptions
+);
 
 //autoDetectRenderer
 
 //Add the canvas that Pixi automatically created for you to the HTML document
-document.body.appendChild(app.view);
+document.body.appendChild(controller.app.view);
 
-console.log('app', app);
-
-app.renderer.type
+//app.renderer.type
 
 /*
 app.renderer.view.style.position = "absolute";
@@ -62,8 +103,8 @@ app.renderer.autoResize = true;
 app.renderer.resize(window.innerWidth, window.innerHeight);
 */
 
-let world = null;
-let camera = null;
+//let world = null;
+//let camera = null;
 
 //load an image and run the `setup` function when it's done
 PIXI.loader
@@ -81,10 +122,10 @@ function setup() {
 
   //world.addChild(sprite);
 
-  world = new World();
-  camera = new Camera(world);
+  controller.world = new World();
+  controller.camera = new Camera(controller.world);
 
-  app.stage.addChild(camera);
+  controller.app.stage.addChild(controller.camera);
 
 
 
@@ -137,7 +178,7 @@ function gameLoop(delta) {
 }
 
 //Start the loop
-app.ticker.add(delta => gameLoop(delta));
+controller.app.ticker.add(delta => gameLoop(delta));
 
 
 
@@ -149,7 +190,7 @@ let inputStates = {
 }
 
 // Bind input events
-app.view.addEventListener('mousedown', (event) => {
+controller.app.view.addEventListener('mousedown', (event) => {
   if (event.which === 1) {
     inputStates.leftMouseDown = true;
   }
@@ -161,7 +202,7 @@ app.view.addEventListener('mousedown', (event) => {
   }
 });
 
-app.view.addEventListener('mouseup', (event) => {
+controller.app.view.addEventListener('mouseup', (event) => {
   if (event.which === 1) {
     inputStates.leftMouseDown = false;
   }
@@ -175,13 +216,26 @@ app.view.addEventListener('mouseup', (event) => {
 
 var prevXPos = 0;
 var prevYPos = 0;
-app.view.addEventListener('mousemove', (e) => {
-  var distanceX = prevXPos - e.pageX;
-  var distanceY = prevYPos - e.pageY;
-  prevXPos = e.pageX;
-  prevYPos = e.pageY;
-  if (inputStates.leftMouseDown && camera) {
-    camera.move(new Vector(distanceX, distanceY));
+controller.app.view.addEventListener('mousemove', (e:MouseEvent) => {
+  //var distanceX = prevXPos - e.pageX;
+  //var distanceY = prevYPos - e.pageY;
+  //prevXPos = e.pageX;
+  //prevYPos = e.pageY;
+  //var screenX = e.pageX - controller.app.view.offsetLeft; 
+  //var screenY = e.pageY - controller.app.view.offsetTop; 
+
+  //console.log(e.offsetX, e.offsetY);
+  
+  controller.cursor.position.set(e.offsetX, e.offsetY);
+
+
+  //e.offsetX
+  //e.movementX
+  //controller.cursor.prevPosition
+  //controller.cursor.position.x
+  if (inputStates.leftMouseDown && controller.camera) {
+    controller.camera.move(new Vector(e.movementX, e.movementY));
+    //controller.camera.move(new Vector(distanceX, distanceY));
     //let worldPosition = world.grid.position;
     //world.setWorldPosition(worldPosition.x - distanceX, worldPosition.y - distanceY);
   }
@@ -192,12 +246,12 @@ app.view.addEventListener('mousemove', (e) => {
 
 var statsFPS = new Stats();
 statsFPS.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-statsFPS.domElement.style.cssText = 'position:absolute;top:0px;left:0px;';
+statsFPS.dom.style.cssText = 'position:absolute;top:0px;left:0px;';
 document.body.appendChild(statsFPS.dom);
 
 var statsMB = new Stats();
 statsMB.showPanel(2); // 0: fps, 1: ms, 2: mb, 3+: custom
-statsMB.domElement.style.cssText = 'position:absolute;top:0px;left:80px;';
+statsMB.dom.style.cssText = 'position:absolute;top:0px;left:80px;';
 document.body.appendChild(statsMB.dom);
 
 function update() {

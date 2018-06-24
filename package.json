@@ -2,7 +2,7 @@
   "name": "spaaace",
   "version": "2.0.0",
   "engines": {
-    "node": "6.11.1"
+    "node": "8.11.3"
   },
   "description": "An HTML5 multiplayer space shooter based on Lance",
   "main": "main.js",
@@ -30,12 +30,13 @@
     "socket.io": "^1.4.8",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^4.12.0"
+    "webpack": "^4.12.1"
   },
   "devDependencies": {
     "@types/jest": "^23.1.1",
     "@types/lodash": "^4.14.110",
     "@types/pixi.js": "^4.7.5",
+    "@types/stats": "^0.16.30",
     "awesome-typescript-loader": "^5.1.1",
     "babel-cli": "^6.26.0",
     "babelify": "^7.3.0",

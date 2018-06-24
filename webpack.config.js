@@ -6,7 +6,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 
 module.exports = {
-    entry: './src/client/main.js',
+    entry: './src/client/main.ts',
     //entry: './src/client/findme.ts',
     output: {
         path: path.join(__dirname, 'dist'),
