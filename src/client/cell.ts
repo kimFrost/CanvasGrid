@@ -11,6 +11,8 @@ export default class Cell extends PIXI.Container {
     private yi: number;
     private cellWidth: number;
     private cellHeight: number;
+    readonly tileWidth: number;
+    readonly tileHeight: number;
     constructor(x, y, width, height) {
         super();
         this.worldLocation = new Vector();
@@ -20,6 +22,9 @@ export default class Cell extends PIXI.Container {
         this.yi = y * 1.02;
         this.cellWidth = width;
         this.cellHeight = height;
+
+        this.tileWidth = this.cellWidth / 16;
+        this.tileHeight = this.cellHeight / 16;
     }
     init() {
         let testGraphic = new PIXI.Graphics();
@@ -43,20 +48,18 @@ export default class Cell extends PIXI.Container {
         testGraphic.endFill();
         this.addChild(testGraphic);
 
-        let tileWidth = this.cellWidth / 16;
-        let tileHeight = this.cellHeight / 16;
         for (let yi = 0; yi < 16; yi++) {
             for (let xi = 0; xi < 16; xi++) {
                 let tile = new Tile();
                 tile.coordinates = new Vector(xi, yi);
                 let position = {
-                    x: this.cellWidth / 2 - tileWidth / 2,
+                    x: this.cellWidth / 2 - this.tileWidth / 2,
                     y: 0
                 };
-                position.x += xi * (tileWidth / 2);
-                position.x -= yi * (tileWidth / 2);
-                position.y += xi * (tileHeight / 2);
-                position.y += yi * (tileHeight / 2);
+                position.x += xi * (this.tileWidth / 2);
+                position.x -= yi * (this.tileWidth / 2);
+                position.y += xi * (this.tileHeight / 2);
+                position.y += yi * (this.tileHeight / 2);
 
                 //tile.position.x = xi * tileWidth + (yi % 2 * tileWidth / 2);
                 //tile.position.y = yi * tileHeight / 2;

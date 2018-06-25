@@ -12,6 +12,7 @@ export default class Grid extends PIXI.Container {
     private chunkYCount: number;
     private tileWidth: number;
     private tileHeight: number;
+    readonly tileSideLength: number;
     private cellWidth: number;
     private cellHeight: number;
     private cellStates: any[];
@@ -28,6 +29,8 @@ export default class Grid extends PIXI.Container {
         this.cellHeight = this.tileHeight * 16;
         this.cellStates = [];
         this.loadedCells = [];
+        this.tileSideLength = new Vector(this.tileWidth / 2, this.tileWidth / 4).length;
+
         // matrix array x, y [[x: {}][y: {}]]
         /*
           x 1 2 3 4 
@@ -54,8 +57,8 @@ export default class Grid extends PIXI.Container {
         let coordinate = new Vector(0, 0);
 
         // Deffenitly not right math.
-        coordinate.x = Math.round(worldPosition.x / this.tileWidth);
-        coordinate.y = Math.round(worldPosition.y / this.tileWidth);
+        coordinate.x = Math.round(worldPosition.x / this.tileSideLength);
+        coordinate.y = Math.round(worldPosition.y / this.tileSideLength);
 
         return coordinate;
     }
