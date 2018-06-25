@@ -11,7 +11,7 @@ export default class Camera extends PIXI.Container {
     private world: World;
     private cellsInView: Cell[];
     private debugTextNode: PIXI.Text;
-    private testGraphic: PIXI.Graphics;
+    public testGraphic: PIXI.Graphics;
     constructor(world: World) {
         super();
         this.world = world;
@@ -58,11 +58,10 @@ export default class Camera extends PIXI.Container {
             if (controller) {
                 let worldPosition = this.screenPositionToWorldPosition(controller.cursor.position);
                 let coordinate = grid.worldPositionToCoordinate(worldPosition);
-                console.log('worldPosition', worldPosition);
-                console.log('coordinate', coordinate);
-                console.log('pos', controller.cursor.position);
+                //console.log('worldPosition', worldPosition);
+                //console.log('coordinate', coordinate);
+                //console.log('pos', controller.cursor.position);
 
-                this.testGraphic.position.set(worldPosition.x, worldPosition.y);
             }
             //let screenPosition = Controller.GetCursorScreenPosition();
             //let worldPosition = this.screenPositionToWorldPosition(screenPosition);

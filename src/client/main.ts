@@ -31,6 +31,10 @@ export default class Controller {
   constructor() {
     this.cursor = new Cursor();
   }
+  screenPositionToWorldPosition(screenPosition: Vector): Vector {
+    let skewedLoc = screenPosition.rotate(45);
+    return skewedLoc.add(new Vector(this.world.position.x, this.world.position.y));
+  }
 }
 
 let controller = new Controller();
@@ -216,7 +220,7 @@ controller.app.view.addEventListener('mouseup', (event) => {
 
 var prevXPos = 0;
 var prevYPos = 0;
-controller.app.view.addEventListener('mousemove', (e:MouseEvent) => {
+controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   //var distanceX = prevXPos - e.pageX;
   //var distanceY = prevYPos - e.pageY;
   //prevXPos = e.pageX;
@@ -225,9 +229,16 @@ controller.app.view.addEventListener('mousemove', (e:MouseEvent) => {
   //var screenY = e.pageY - controller.app.view.offsetTop; 
 
   //console.log(e.offsetX, e.offsetY);
-  
+
   controller.cursor.position.set(e.offsetX, e.offsetY);
 
+  let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position)
+  let coordinate = controller.world.grid.worldPositionToCoordinate(worldPosition);
+
+  console.log('worldPosition', worldPosition);
+  //console.log('coordinate', coordinate);
+
+  controller.camera.testGraphic.position.set(worldPosition.x, worldPosition.y);
 
   //e.offsetX
   //e.movementX

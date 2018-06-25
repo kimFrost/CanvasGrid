@@ -13,6 +13,7 @@ export default class Cell extends PIXI.Container {
     private cellHeight: number;
     readonly tileWidth: number;
     readonly tileHeight: number;
+    readonly tileSideLength: number;
     constructor(x, y, width, height) {
         super();
         this.worldLocation = new Vector();
@@ -25,6 +26,8 @@ export default class Cell extends PIXI.Container {
 
         this.tileWidth = this.cellWidth / 16;
         this.tileHeight = this.cellHeight / 16;
+        this.tileSideLength = Math.round(new Vector(this.tileWidth / 2, this.tileWidth / 4).length * 100) / 100;
+
     }
     init() {
         let testGraphic = new PIXI.Graphics();
@@ -68,7 +71,7 @@ export default class Cell extends PIXI.Container {
 
                 //tile.position.y += Math.floor(Math.floor(Math.random() * (10 - 0 + 1)) + 0);
 
-                tile.worldLocation = new Vector(tile.position.x, tile.position.y).add(this.worldLocation);
+                tile.worldLocation = new Vector(xi * this.tileSideLength, yi * this.tileSideLength).add(this.worldLocation);
                 //tile.worldLocation = new Vector(xi * 100, yi * 100);
 
                 let text = new PIXI.Text(`x: ${tile.worldLocation.x}, y: ${tile.worldLocation.y}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });

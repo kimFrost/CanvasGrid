@@ -29,7 +29,7 @@ export default class Grid extends PIXI.Container {
         this.cellHeight = this.tileHeight * 16;
         this.cellStates = [];
         this.loadedCells = [];
-        this.tileSideLength = new Vector(this.tileWidth / 2, this.tileWidth / 4).length;
+        this.tileSideLength = Math.round(new Vector(this.tileWidth / 2, this.tileWidth / 4).length * 100) / 100;
 
         // matrix array x, y [[x: {}][y: {}]]
         /*
