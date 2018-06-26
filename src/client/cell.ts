@@ -43,7 +43,7 @@ export default class Cell extends PIXI.Container {
         //this.position.set(this.xi * this.cellWidth, this.yi * this.cellHeight + (this.yi % 2 * this.cellHeight));
         this.position.set(position.x, position.y);
 
-        this.worldLocation = new Vector(position.x, position.y);
+        this.worldLocation = new Vector(position.x + this.cellWidth / 2, position.y);
 
         testGraphic.lineStyle(2, 0x0000FF, 1);
         testGraphic.beginFill(0xFF00BB, 0.15);
@@ -74,8 +74,8 @@ export default class Cell extends PIXI.Container {
                 tile.worldLocation = new Vector(xi * this.tileSideLength, yi * this.tileSideLength).add(this.worldLocation);
                 //tile.worldLocation = new Vector(xi * 100, yi * 100);
 
-                //let text = new PIXI.Text(`x: ${tile.worldLocation.x}, y: ${tile.worldLocation.y}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
-                let text = new PIXI.Text(`xi: ${xi}, yi: ${yi}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
+                let text = new PIXI.Text(`x: ${tile.worldLocation.x}, y: ${tile.worldLocation.y}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
+                //let text = new PIXI.Text(`xi: ${xi}, yi: ${yi}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
                 tile.addChild(text);
 
                 //tile.zOrder = yi;
