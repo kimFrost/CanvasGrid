@@ -42,6 +42,14 @@ export default class Controller {
     coordinate.x = (screenPosition.x / TILE_WIDTH_HALF + screenPosition.y / TILE_HEIGHT_HALF) /2;
     coordinate.y = (screenPosition.y / TILE_HEIGHT_HALF -(screenPosition.x / TILE_WIDTH_HALF)) /2;
     return coordinate;
+
+    /*
+    position.x += xi * (this.tileWidth / 2);
+    position.x -= yi * (this.tileWidth / 2);
+    position.y += xi * (this.tileHeight / 2);
+    position.y += yi * (this.tileHeight / 2);
+    */
+
     //return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(-26.56505);
 
     /*
