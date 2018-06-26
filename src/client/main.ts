@@ -13,6 +13,11 @@ let zoom = 1;
 let xCount = 20;
 let yCount = 20;
 
+const TILE_WIDTH = 100;
+const TILE_HEIGHT = 100;
+const TILE_WIDTH_HALF = TILE_WIDTH / 2;
+const TILE_HEIGHT_HALF  = TILE_HEIGHT / 2;
+
 
 class Cursor {
   public position: Vector;
@@ -32,7 +37,17 @@ export default class Controller {
     this.cursor = new Cursor();
   }
   screenPositionToWorldPosition(screenPosition: Vector): Vector {
-    return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(-26.56505);
+    screenPosition = screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y));
+    let coordinate = new Vector();
+    coordinate.x = (screenPosition.x / TILE_WIDTH_HALF + screenPosition.y / TILE_HEIGHT_HALF) /2;
+    coordinate.y = (screenPosition.y / TILE_HEIGHT_HALF -(screenPosition.x / TILE_WIDTH_HALF)) /2;
+    return coordinate;
+    //return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(-26.56505);
+
+    /*
+    worldLocation.x = (screen.x / TILE_WIDTH_HALF + screen.y / TILE_HEIGHT_HALF) /2;
+    worldLocation.y = (screen.y / TILE_HEIGHT_HALF -(screen.x / TILE_WIDTH_HALF)) /2;
+    */
   }
 }
 
