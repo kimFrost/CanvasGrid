@@ -32,7 +32,7 @@ export default class Controller {
     this.cursor = new Cursor();
   }
   screenPositionToWorldPosition(screenPosition: Vector): Vector {
-    return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(30);
+    return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(-26.56505);
   }
 }
 
@@ -235,9 +235,11 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   let coordinate = controller.world.grid.worldPositionToCoordinate(worldPosition);
 
   console.log('worldPosition', worldPosition);
-  //console.log('coordinate', coordinate);
+  console.log('coordinate', coordinate);
 
-  controller.camera.testGraphic.position.set(worldPosition.x, worldPosition.y);
+  //let cellInFocus = controller.world.grid.getCell(coordinate);
+
+  //controller.camera.testGraphic.position.set(worldPosition.x, worldPosition.y);
 
   //e.offsetX
   //e.movementX

@@ -74,8 +74,8 @@ export default class Cell extends PIXI.Container {
                 tile.worldLocation = new Vector(xi * this.tileSideLength, yi * this.tileSideLength).add(this.worldLocation);
                 //tile.worldLocation = new Vector(xi * 100, yi * 100);
 
-                let text = new PIXI.Text(`x: ${tile.worldLocation.x}, y: ${tile.worldLocation.y}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
-                //let text = new PIXI.Text(`xi: ${xi}, yi: ${yi}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
+                //let text = new PIXI.Text(`x: ${tile.worldLocation.x}, y: ${tile.worldLocation.y}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
+                let text = new PIXI.Text(`xi: ${xi}, yi: ${yi}`, { fontFamily: 'Arial', fontSize: 12, fill: 0xff1010, align: 'center' });
                 tile.addChild(text);
 
                 //tile.zOrder = yi;
