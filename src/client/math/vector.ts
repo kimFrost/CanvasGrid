@@ -264,16 +264,13 @@ class Vector {
 	}
 
 	rotate(degrees: number): Vector {
-		//radians = degrees * (Math.PI/180)
-		//angle = -angle * (Math.PI / 180);
-		//let radians = -degrees * (Math.PI/180)
 		let radians = degrees * (Math.PI / 180)
 		var cos = Math.cos(radians);
 		var sin = Math.sin(radians);
-		this.x = Math.round(100000 * this.x * cos - this.y * sin) / 100000;
-		this.y = Math.round(100000 * this.x * sin + this.y * cos) / 100000;
-		//this.x  = Math.round(10000 * (this.x * cos - this.y * sin)) / 10000;
-		//this.y = Math.round(10000 * (this.x * sin + this.y * cos)) / 10000;
+		let x = this.x;
+		let y = this.y;
+		this.x = Math.round(10000 * (x * cos - y * sin)) / 10000;
+		this.y = Math.round(10000 * (x * sin + y * cos)) / 10000;
 		return this;
 	}
 

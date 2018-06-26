@@ -32,8 +32,7 @@ export default class Controller {
     this.cursor = new Cursor();
   }
   screenPositionToWorldPosition(screenPosition: Vector): Vector {
-    let skewedLoc = screenPosition.rotate(45);
-    return skewedLoc.add(new Vector(this.world.position.x, this.world.position.y));
+    return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(30);
   }
 }
 
