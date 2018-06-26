@@ -38,16 +38,23 @@ export default class Controller {
   }
   screenPositionToWorldPosition(screenPosition: Vector): Vector {
     screenPosition = screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y));
-    let coordinate = new Vector();
-    coordinate.x = (screenPosition.x / TILE_WIDTH_HALF + screenPosition.y / TILE_HEIGHT_HALF) /2;
-    coordinate.y = (screenPosition.y / TILE_HEIGHT_HALF -(screenPosition.x / TILE_WIDTH_HALF)) /2;
-    return coordinate;
 
+
+    let coordinate = new Vector();
+
+    coordinate.x = screenPosition.x / TILE_WIDTH + screenPosition.y / TILE_HEIGHT;
+    coordinate.y = screenPosition.y / TILE_HEIGHT - screenPosition.x / TILE_WIDTH;
+
+    //coordinate.x * TileWidth
+    //coordinate.y * TileHeight
+
+    return coordinate;
+    
     /*
-    position.x += xi * (this.tileWidth / 2);
-    position.x -= yi * (this.tileWidth / 2);
-    position.y += xi * (this.tileHeight / 2);
-    position.y += yi * (this.tileHeight / 2);
+    tile.x += xi * (TILE_WIDTH / 2);
+    tile.x -= yi * (TILE_WIDTH / 2);
+    tile.y += xi * (TILE_HEIGHT / 2);
+    tile.y += yi * (TILE_HEIGHT / 2);
     */
 
     //return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(-26.56505);

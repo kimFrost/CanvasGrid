@@ -95,6 +95,16 @@ export default class Grid extends PIXI.Container {
     getCell(v: Vector): Cell {
         return this.cells.get(v.x, v.y);
     }
+    getTile(v: Vector): Cell {
+        let cellX = Math.round(v.x / this.tileWidth);
+        let cellY = Math.round(v.y / this.tileHeight);
+        let cell = this.getCell(new Vector(cellX, cellY));
+        if (cell)
+        {
+            
+        }
+        return null;
+    }
     setCellFocus(cell) {
         // Load all cells in range of 2 of cell
 
