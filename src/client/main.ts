@@ -16,7 +16,8 @@ let yCount = 20;
 const TILE_WIDTH = 100;
 const TILE_HEIGHT = 100;
 const TILE_WIDTH_HALF = TILE_WIDTH / 2;
-const TILE_HEIGHT_HALF  = TILE_HEIGHT / 2;
+const TILE_HEIGHT_HALF = TILE_HEIGHT / 2;
+const TILE_SIDE_LENGTH = Math.round(new Vector(TILE_WIDTH / 2, TILE_HEIGHT / 4).length * 100) / 100;
 
 
 class Cursor {
@@ -36,29 +37,20 @@ export default class Controller {
   constructor() {
     this.cursor = new Cursor();
   }
-  screenPositionToWorldPosition(screenPosition: Vector): Vector {
-    screenPosition = screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y));
-
-
+  screenPositionToCoordinate(screenPosition: Vector, round = false): Vector {
+    // Get relative screen position to camera offset
+    screenPosition = screenPosition.clone().subtract(new Vector(this.world.position.x, this.world.position.y));
     let coordinate = new Vector();
-
-    coordinate.x = screenPosition.x / TILE_WIDTH + screenPosition.y / TILE_HEIGHT;
-    coordinate.y = screenPosition.y / TILE_HEIGHT - screenPosition.x / TILE_WIDTH;
-
-    //coordinate.x * TileWidth
-    //coordinate.y * TileHeight
-
+    coordinate.x = screenPosition.x / TILE_WIDTH + screenPosition.y / TILE_HEIGHT_HALF;
+    coordinate.y = screenPosition.y / TILE_HEIGHT_HALF - screenPosition.x / TILE_WIDTH;
+    if (round) {
+      coordinate.round();
+    }
     return coordinate;
-    
-    /*
-    tile.x += xi * (TILE_WIDTH / 2);
-    tile.x -= yi * (TILE_WIDTH / 2);
-    tile.y += xi * (TILE_HEIGHT / 2);
-    tile.y += yi * (TILE_HEIGHT / 2);
-    */
-
+  }
+  screenPositionToWorldPosition(screenPosition: Vector): Vector {
+    return this.screenPositionToCoordinate(screenPosition).multiply(TILE_SIDE_LENGTH);
     //return screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y)).rotate(-26.56505);
-
     /*
     worldLocation.x = (screen.x / TILE_WIDTH_HALF + screen.y / TILE_HEIGHT_HALF) /2;
     worldLocation.y = (screen.y / TILE_HEIGHT_HALF -(screen.x / TILE_WIDTH_HALF)) /2;
@@ -73,41 +65,11 @@ export function getController(): Controller {
 }
 
 
-
-/*
-for (let yi = 0; yi < yCount; yi++) {
-  for (let xi = 0; xi < xCount; xi++) {
-    let tile = new Tile();
-    tile.coordinates = { xi, yi };
-    tile.position.x = xi * options.tileWidth + (yi % 2 * options.tileWidth / 2);
-    tile.position.y = yi * options.tileHeight / 2;// - (yi % 2 * options.tileHeight / 2);
-    tile.position.y += Math.floor(Math.floor(Math.random() * (20 - 0 + 1)) + 0);
-    tiles.push(tile);
-  }
-}
-*/
-
-
-//WEBGLRENDERER
-//CanvasRenderer
-
 //var renderer = new PIXI.autoDetectRenderer(400, 300);if (renderer.type == PIXI.WEBGL_RENDERER) {   console.log('Using WebGL');} else {  console.log('Using Canvas');};
 
 //renderer.plugins.interaction.mouse
 //renderer.plugins.interaction.mouse.global.x
 
-
-/*
-let appOptions = {
-  width: 1200,         // default: 800
-  height: 800,        // default: 600
-  //forceCanvas: true,
-  antialias: false,    // default: false
-  transparent: false, // default: false
-  resolution: 1,       // default: 1
-  backgroundColor: '0x1099bb'
-} as PIXI.ApplicationOptions
-*/
 
 //Create a Pixi Application
 controller.app = new PIXI.Application(
@@ -159,38 +121,6 @@ function setup() {
   controller.camera = new Camera(controller.world);
 
   controller.app.stage.addChild(controller.camera);
-
-
-
-  //world.position.set(20, 50);
-  //world.vx = 1;
-
-  //world.x = (app.screen.width - world.width) / 2;
-  //world.y = (app.screen.height - world.height) / 2;
-
-
-  /*
-  for (let tile of tiles) {
-    var tileSprite = new PIXI.Sprite(texture);
-    //tileSprite.anchor.set(0.5);
-    tileSprite.x = tile.position.x;
-    tileSprite.y = tile.position.y;
-    world.addChild(tileSprite);
-  }
-  */
-
-  /*
-  for (let yi = 0; yi < yCount; yi++) {
-    for (let xi = 0; xi < xCount; xi++) {
-      let tile = new Tile(texture);
-      tile.coordinates = { xi, yi };
-      tile.position.x = xi * options.tileWidth + (yi % 2 * options.tileWidth / 2);
-      tile.position.y = yi * options.tileHeight / 2;// - (yi % 2 * options.tileHeight / 2);
-      tile.position.y += Math.floor(Math.floor(Math.random() * (20 - 0 + 1)) + 0);
-      world.addChild(tile);
-    }
-  }
-  */
 
 }
 
@@ -262,7 +192,7 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   controller.cursor.position.set(e.offsetX, e.offsetY);
 
   let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position)
-  let coordinate = controller.world.grid.worldPositionToCoordinate(worldPosition);
+  let coordinate = controller.screenPositionToCoordinate(controller.cursor.position, true);
 
   console.log('worldPosition', worldPosition);
   console.log('coordinate', coordinate);
