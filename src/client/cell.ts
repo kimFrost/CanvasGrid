@@ -27,7 +27,7 @@ export default class Cell extends PIXI.Container {
         this.tileWidth = this.cellWidth / 16;
         this.tileHeight = this.cellHeight / 16;
         this.tileSideLength = Math.round(new Vector(this.tileWidth / 2, this.tileWidth / 4).length * 100) / 100;
-
+        this.visible = false;
     }
     init() {
         let testGraphic = new PIXI.Graphics();

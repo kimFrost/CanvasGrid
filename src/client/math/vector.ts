@@ -274,10 +274,10 @@ class Vector {
 		return this;
 	}
 
-	round(numOfDecimals = 0): Vector {
+	floor(numOfDecimals = 0): Vector {
 		var power = Math.pow(10, numOfDecimals);
-		this.x = Math.round(power * this.x) / power;
-		this.y = Math.round(power * this.y) / power;
+		this.x = Math.floor(power * this.x) / power;
+		this.y = Math.floor(power * this.y) / power;
 		return this;
 	}
 }

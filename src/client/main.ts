@@ -44,7 +44,7 @@ export default class Controller {
     coordinate.x = screenPosition.x / TILE_WIDTH + screenPosition.y / TILE_HEIGHT_HALF;
     coordinate.y = screenPosition.y / TILE_HEIGHT_HALF - screenPosition.x / TILE_WIDTH;
     if (round) {
-      coordinate.round();
+      coordinate.floor();
     }
     return coordinate;
   }
@@ -192,10 +192,17 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   controller.cursor.position.set(e.offsetX, e.offsetY);
 
   let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position)
-  let coordinate = controller.screenPositionToCoordinate(controller.cursor.position, true);
+  let tileCoordinate = controller.screenPositionToCoordinate(controller.cursor.position, true);
 
-  console.log('worldPosition', worldPosition);
-  console.log('coordinate', coordinate);
+  let cellCordinate = tileCoordinate.clone().divide(16).floor();
+  let cell = controller.world.grid.getCell(cellCordinate);
+
+  console.log(tileCoordinate, worldPosition, cellCordinate, cell);
+
+  if (cell) {
+    cell.visible = true;
+  }
+
 
   //let cellInFocus = controller.world.grid.getCell(coordinate);
 
