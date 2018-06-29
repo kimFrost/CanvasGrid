@@ -194,10 +194,10 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position)
   let tileCoordinate = controller.screenPositionToCoordinate(controller.cursor.position, true);
 
-  let cellCordinate = tileCoordinate.clone().divide(16).floor();
-  let cell = controller.world.grid.getCell(cellCordinate);
+  let cellCoordinate = tileCoordinate.clone().divide(16).floor();
+  let cell = controller.world.grid.getCell(cellCoordinate);
 
-  console.log(tileCoordinate, worldPosition, cellCordinate, cell);
+  console.log(tileCoordinate, worldPosition, cellCoordinate, cell);
 
   if (cell) {
     cell.visible = true;

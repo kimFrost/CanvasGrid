@@ -56,7 +56,6 @@ export default class Grid extends PIXI.Container {
     public worldPositionToCoordinate(worldPosition: Vector): Vector {
         let coordinate = new Vector(0, 0);
 
-        // Deffenitly not right math.
         coordinate.x = Math.round(worldPosition.x / this.tileSideLength);
         coordinate.y = Math.round(worldPosition.y / this.tileSideLength);
 
@@ -83,7 +82,7 @@ export default class Grid extends PIXI.Container {
         this.addChild(cell);
     }
     generateCell(x, y) {
-        let cell = new Cell(x, y, this.cellWidth, this.cellHeight);
+        let cell = new Cell(x, y, this.cellWidth, this.cellHeight, this);
         cell.init();
         return cell;
     }
@@ -92,20 +91,14 @@ export default class Grid extends PIXI.Container {
 
         //Add cell to loadedCells
     }
-    public getCell(v: Vector): Cell {
-        return this.cells.get(v.x, v.y);
+    public getCell(cellCoordinate: Vector): Cell {
+        return this.cells.get(cellCoordinate.x, cellCoordinate.y);
     }
-    public getTile(v: Vector): Tile {
-        /*
-        let cellX = Math.round(v.x / TILE_SIDE_LENGTH);
-        let cellY = Math.round(v.y / TILE_SIDE_LENGTH);
-        let cell = this.getCell(new Vector(cellX, cellY));
-        if (cell)
-        {
-            
-        }
-        */
-        return null;
+    public getTile(tileCoordinate: Vector): Tile {
+        let cellCoordinate = tileCoordinate.clone().divide(16).floor();
+        let cell = this.getCell(cellCoordinate);
+        let localTileCordinate = tileCoordinate.clone().subtract(cellCoordinate.multiply(16));
+        return cell.tiles.get(localTileCordinate.x, localTileCordinate.y);
     }
     setCellFocus(cell) {
         // Load all cells in range of 2 of cell

@@ -1,28 +1,32 @@
 'use strict';
 
 import Tile from './tile';
+import Grid from './grid';
 import Vector from './math/vector';
+import TileMatrix from './tile.matrix';
 
 export default class Cell extends PIXI.Container {
     public worldLocation: Vector;
-    private tiles: any[];
     private neighbours: Cell[];
     private xi: number;
     private yi: number;
     private cellWidth: number;
     private cellHeight: number;
+    private grid: Grid;
+    readonly tiles: TileMatrix;
     readonly tileWidth: number;
     readonly tileHeight: number;
     readonly tileSideLength: number;
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, grid: Grid) {
         super();
         this.worldLocation = new Vector();
-        this.tiles = [];
+        this.tiles = new TileMatrix();
         this.neighbours = [null, null, null, null];
         this.xi = x * 1.02;
         this.yi = y * 1.02;
         this.cellWidth = width;
         this.cellHeight = height;
+        this.grid = grid;
 
         this.tileWidth = this.cellWidth / 16;
         this.tileHeight = this.cellHeight / 16;
@@ -53,8 +57,8 @@ export default class Cell extends PIXI.Container {
 
         for (let yi = 0; yi < 16; yi++) {
             for (let xi = 0; xi < 16; xi++) {
-                let tile = new Tile();
-                tile.coordinates = new Vector(xi, yi);
+                let tile = new Tile(this, this.grid);
+                tile.coordinate = new Vector(xi, yi);
                 let position = {
                     x: this.cellWidth / 2 - this.tileWidth / 2,
                     y: 0
@@ -79,6 +83,7 @@ export default class Cell extends PIXI.Container {
                 tile.addChild(text);
 
                 //tile.zOrder = yi;
+                this.tiles.set(xi, yi, tile);
                 this.addChild(tile);
             }
         }
