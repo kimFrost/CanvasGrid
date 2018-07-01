@@ -56,8 +56,9 @@ export default class Camera extends PIXI.Container {
 
             let controller = getController();
             if (controller) {
-                let worldPosition = this.screenPositionToWorldPosition(controller.cursor.position);
-                let coordinate = grid.worldPositionToCoordinate(worldPosition);
+                //let worldPosition = this.screenPositionToWorldPosition(controller.cursor.position);
+                //let coordinate = grid.worldPositionToCoordinate(worldPosition);
+                
                 //console.log('worldPosition', worldPosition);
                 //console.log('coordinate', coordinate);
                 //console.log('pos', controller.cursor.position);

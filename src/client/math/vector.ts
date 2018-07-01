@@ -69,11 +69,15 @@ class Vector {
 	 * @param {Vector} v The vector to add.
 	 * @return {Vector}   The current vector. useful for daisy-chaining calls.
 	 */
-	add(v: Vector) {
-		this.x += v.x;
-		this.y += v.y;
+	static add(v: Vector, av: Vector): Vector {
+		v = v.clone();
+		v.x += av.x;
+		v.y += av.y;
 
-		return this;
+		return v;
+	}
+	add(av: Vector): Vector {
+		return Vector.add(this, av);
 	}
 
 	/**
@@ -81,11 +85,14 @@ class Vector {
 	 * @param  {Vector} v The vector to subtract from this one.
 	 * @return {Vector}   The current vector. useful for daisy-chaining calls.
 	 */
-	subtract(v: Vector) {
-		this.x -= v.x;
-		this.y -= v.y;
-
-		return this;
+	static subtract(v: Vector, sv: Vector): Vector {
+		v = v.clone();
+		v.x -= sv.x;
+		v.y -= sv.y;
+		return v;
+	}
+	subtract(sv: Vector): Vector {
+		return Vector.subtract(this, sv);
 	}
 
 	/**
@@ -93,43 +100,74 @@ class Vector {
 	 * @param  {number} value The value to divide by.
 	 * @return {Vector}	   The current vector. Useful for daisy-chaining calls.
 	 */
-	divide(value: number) {
+	static divide(v: Vector, value: number): Vector {
+		v = v.clone();
 		if (typeof value != "number")
 			throw new Error("Can't divide by non-number value.");
 
-		this.x /= value;
-		this.y /= value;
+		v.x /= value;
+		v.y /= value;
 
-		return this;
+		return v;
 	}
+	divide(value: number): Vector {
+		return Vector.divide(this, value);
+	}
+
 
 	/**
 	 * Multiply the current vector by a given value.
 	 * @param  {(number|Vector)} value The number (or Vector) to multiply the current vector by.
 	 * @return {Vector}	   The current vector. useful for daisy-chaining calls.
 	 */
-	multiply(value: Vector | number) {
+	static multiply(v: Vector, value: Vector | number): Vector {
+		v = v.clone(); // Prevent mutation of original vector
 		if (value instanceof Vector) {
-			this.x *= value.x;
-			this.y *= value.y;
+			v.x *= value.x;
+			v.y *= value.y;
 		}
 		else if (typeof value == "number") {
-			this.x *= value;
-			this.y *= value;
+			v.x *= value;
+			v.y *= value;
 		}
 		else
 			throw new Error("Can't multiply by non-number value.");
 
-		return this;
+		return v;
 	}
+	multiply(value: Vector | number): Vector {
+		return Vector.multiply(this, value);
+	}
+
+
+	/*
+	v = Vector.rotate(v, 5);
+	v = v.rotate(5);
+
+	vs
+
+	Vector.rotate(v, 5);
+	v.rotate(5);
+
+	vs
+
+	v = Vector.rotate(v, 5);
+	v.rotate(5);
+	*/
+
+
 
 	/**
 	 * Returns the distance from this point to another point.
 	 * @param  {Vector} otherPoint The point to find the distance to.
 	 * @return {Vector}            The vector distance to the other point.
 	 */
-	distanceTo(otherPoint: Vector) {
-		return otherPoint.clone().subtract(this);
+	static distanceTo(v: Vector, otherPoint: Vector): Vector {
+		v = v.clone();
+		return otherPoint.clone().subtract(v);
+	}
+	distanceTo(otherPoint: Vector): Vector {
+		return Vector.distanceTo(this, otherPoint);
 	}
 
 	/**
@@ -256,30 +294,40 @@ class Vector {
 	 * @param	{number}	length	The length.
 	 * @return	{Vector}	A new vector that represents the (x, y) of the specified angle and length.
 	 */
-	fromBearing(angle: number, length: number) {
+	static fromBearing(angle: number, length: number) {
 		return new Vector(
 			length * Math.cos(angle),
 			length * Math.sin(angle)
 		);
 	}
 
-	rotate(degrees: number): Vector {
+	static rotate(v: Vector, degrees: number): Vector {
+		v = v.clone(); // Prevent mutation of original vector
 		let radians = degrees * (Math.PI / 180)
 		var cos = Math.cos(radians);
 		var sin = Math.sin(radians);
-		let x = this.x;
-		let y = this.y;
-		this.x = Math.round(10000 * (x * cos - y * sin)) / 10000;
-		this.y = Math.round(10000 * (x * sin + y * cos)) / 10000;
-		return this;
+		let x = v.x;
+		let y = v.y;
+		v.x = Math.round(10000 * (x * cos - y * sin)) / 10000;
+		v.y = Math.round(10000 * (x * sin + y * cos)) / 10000;
+		return v;
+	}
+	rotate(degrees: number): Vector {
+		return Vector.rotate(this, degrees);
 	}
 
-	floor(numOfDecimals = 0): Vector {
+	static floor(v: Vector, numOfDecimals = 0): Vector {
+		v = v.clone();
 		var power = Math.pow(10, numOfDecimals);
-		this.x = Math.floor(power * this.x) / power;
-		this.y = Math.floor(power * this.y) / power;
-		return this;
+		v.x = Math.floor(power * v.x) / power;
+		v.y = Math.floor(power * v.y) / power;
+		return v;
 	}
+	floor(numOfDecimals = 0): Vector {
+		return Vector.floor(this, numOfDecimals);
+	}
+
+	
 }
 
 

@@ -39,7 +39,8 @@ export default class Controller {
   }
   screenPositionToCoordinate(screenPosition: Vector, round = false): Vector {
     // Get relative screen position to camera offset
-    screenPosition = screenPosition.clone().subtract(new Vector(this.world.position.x, this.world.position.y));
+
+    screenPosition = screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y));
     let coordinate = new Vector();
     coordinate.x = screenPosition.x / TILE_WIDTH + screenPosition.y / TILE_HEIGHT_HALF;
     coordinate.y = screenPosition.y / TILE_HEIGHT_HALF - screenPosition.x / TILE_WIDTH;
@@ -194,7 +195,7 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position)
   let tileCoordinate = controller.screenPositionToCoordinate(controller.cursor.position, true);
 
-  let cellCoordinate = tileCoordinate.clone().divide(16).floor();
+  let cellCoordinate = tileCoordinate.divide(16).floor();
   let cell = controller.world.grid.getCell(cellCoordinate);
 
   console.log(tileCoordinate, worldPosition, cellCoordinate, cell);

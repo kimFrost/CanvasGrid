@@ -95,9 +95,9 @@ export default class Grid extends PIXI.Container {
         return this.cells.get(cellCoordinate.x, cellCoordinate.y);
     }
     public getTile(tileCoordinate: Vector): Tile {
-        let cellCoordinate = tileCoordinate.clone().divide(16).floor();
+        let cellCoordinate = tileCoordinate.divide(16).floor();
         let cell = this.getCell(cellCoordinate);
-        let localTileCordinate = tileCoordinate.clone().subtract(cellCoordinate.multiply(16));
+        let localTileCordinate = tileCoordinate.subtract(cellCoordinate.multiply(16));
         return cell.tiles.get(localTileCordinate.x, localTileCordinate.y);
     }
     setCellFocus(cell) {
