@@ -33,6 +33,11 @@ export default class Cell extends PIXI.Container {
         this.tileSideLength = Math.round(new Vector(this.tileWidth / 2, this.tileWidth / 4).length * 100) / 100;
         this.visible = false;
     }
+
+    public getAdjacent(v:Vector): Cell {
+        return this.grid.getCell(v.add(new Vector(this.xi, this.yi)));
+    }
+
     init() {
         let testGraphic = new PIXI.Graphics();
         let position = {

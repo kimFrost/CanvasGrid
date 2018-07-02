@@ -55,8 +55,6 @@ class Vector {
 		// Store the (x, y) coordinates
 		this.x = inX;
 		this.y = inY;
-		//this.zero = new Vector(0, 0);
-		//this.one = new Vector(1, 1);
 	}
 
 	set(x: number, y:number) {
@@ -326,6 +324,10 @@ class Vector {
 	floor(numOfDecimals = 0): Vector {
 		return Vector.floor(this, numOfDecimals);
 	}
+
+	static zero = new Vector(0, 0);
+	
+	static one = new Vector(1, 1);
 
 	
 }

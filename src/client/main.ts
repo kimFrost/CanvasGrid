@@ -39,7 +39,6 @@ export default class Controller {
   }
   screenPositionToCoordinate(screenPosition: Vector, round = false): Vector {
     // Get relative screen position to camera offset
-
     screenPosition = screenPosition.subtract(new Vector(this.world.position.x, this.world.position.y));
     let coordinate = new Vector();
     coordinate.x = screenPosition.x / TILE_WIDTH + screenPosition.y / TILE_HEIGHT_HALF;
@@ -130,6 +129,8 @@ function setup() {
 //let superFastSprites = new PIXI.particles.ParticleContainer();
 
 
+let prevCellInFocus: Cell = null;
+
 function gameLoop(delta) {
   //console.log('gameLoop', delta)
   //Call this `gameLoop` function on the next screen refresh
@@ -137,6 +138,32 @@ function gameLoop(delta) {
 
   //Move the cat
   //world.x += 1 + delta;
+
+  // Update cell in focus
+  if (controller.world) {
+    //let worldPosition = controller.screenPositionToWorldPosition(Vector.zero);
+    let tileCoordinate = controller.screenPositionToCoordinate(new Vector(controller.app.renderer.width / 2, controller.app.renderer.height / 2), true);
+    let cellCoordinate = tileCoordinate.divide(16).floor();
+    let cell = controller.world.grid.getCell(cellCoordinate);
+
+    if (prevCellInFocus !== cell) {
+      if (prevCellInFocus) {
+        prevCellInFocus.visible = false;
+        let adjacentCell = prevCellInFocus.getAdjacent(new Vector(1, 0));
+        if (adjacentCell) {
+          adjacentCell.visible = false;
+        }
+      }
+      if (cell) {
+        cell.visible = true;
+        let adjacentCell = cell.getAdjacent(new Vector(1, 0));
+        if (adjacentCell) {
+          adjacentCell.visible = true;
+        }
+      }
+      prevCellInFocus = cell;
+    }
+  }
 
   requestAnimationFrame(gameLoop);
 }
@@ -192,7 +219,10 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
 
   controller.cursor.position.set(e.offsetX, e.offsetY);
 
-  let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position)
+
+
+  /*
+  let worldPosition = controller.screenPositionToWorldPosition(controller.cursor.position);
   let tileCoordinate = controller.screenPositionToCoordinate(controller.cursor.position, true);
 
   let cellCoordinate = tileCoordinate.divide(16).floor();
@@ -203,6 +233,7 @@ controller.app.view.addEventListener('mousemove', (e: MouseEvent) => {
   if (cell) {
     cell.visible = true;
   }
+  */
 
 
   //let cellInFocus = controller.world.grid.getCell(coordinate);
