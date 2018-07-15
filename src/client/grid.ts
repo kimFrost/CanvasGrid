@@ -11,7 +11,7 @@ export default class Grid extends PIXI.Container {
     private chunkXCount: number;
     private chunkYCount: number;
     private tileWidth: number;
-    private tileHeight: number;
+    private tileHeight: number; 
     readonly tileSideLength: number;
     private cellWidth: number;
     private cellHeight: number;
