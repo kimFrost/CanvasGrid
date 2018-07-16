@@ -281,6 +281,8 @@ window.requestAnimationFrame(update);
 
 
 
+//https://github.com/pixijs/pixi.js/wiki/v4-Performance-Tips
+
 
 
 //https://sprite-storm.com/tutorial/pixi-tutorial/pixi-js-creating-game-pixi-application-class/
